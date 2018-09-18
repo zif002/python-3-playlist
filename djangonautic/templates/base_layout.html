@@ -8,12 +8,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Articles</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
     <body>
-        <div class="wrapper">
-            <h1><a href="{% url 'list' %}"><img src="{% static 'logo.png' %}" alt="">fdsfsf</a></h1>
-            {% block content%}
-            {% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                        <ul class="nav">
+                                {% if user.is_authenticated %}
+                                    <li class="nav-item">
+                                        <form action="{% url 'accounts:logout'%}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit">Logout</button>
+                                        </form>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'articles:create' %}">Create Article</a>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a></li>
+                                {% endif%}
+
+                        </ul>
+                        <h1><a href="{% url 'home' %}"><img src="{% static 'logo.png' %}" alt="">fdsfsf</a></h1>
+                        {% block content%}
+                        {% endblock %}
+                </div>
+            </div>
+          
         </div>
     </body>
 </html>
